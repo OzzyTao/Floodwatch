@@ -1,0 +1,13 @@
+{% autoescape off %}
+{
+	"result":{"type":"FeatureCollection",
+ "features":[
+  {
+  	"type":"Feature",
+  	"geometry":{{feature.geometry}},
+  	"properties":{"id":"{{feature.properties.id}}","address":"{{feature.properties.address}}"}
+  }
+ ]
+}
+}
+{% endautoescape %}

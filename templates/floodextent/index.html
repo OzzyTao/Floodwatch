@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Flood Watch</title>
+		<link rel="stylesheet" type="text/css" href='{% static "js/leaflet/leaflet.css" %}'>
+		<link rel="stylesheet" type="text/css" href='{% static "js/jquery-ui/jquery-ui.min.css" %}'>
+		<link rel="stylesheet" type="text/css" href='{% static "Popup/assets/css/popup.css" %}'>
+		<style type="text/css">
+		body {
+		    padding: 0;
+		    margin: 0;
+		}
+		html, body, #map {
+		    height: 100%;
+		}
+		div.address {
+			position: absolute;
+			/*z-index: 900;*/
+			padding-left: 50%;
+			top: 0;
+			display: inline;
+		}
+		form.address {
+			width: 500px;
+			margin-left: 50px;
+			margin-right: 50px;
+			margin-bottom: 0px;
+			margin-top: 20px;
+		}
+		#query {
+			width: 300px;
+            padding:8px 15px;
+            background:rgba(50, 50, 50, 0.2);
+            border:0px solid #dbdbdb;
+		}
+		#Search {
+            position:relative;
+            padding:6px 15px;
+            left:-8px;
+            border:2px solid #207cca;
+            background-color:#207cca;
+            color:#fafafa;
+		}
+		#Search:hover  {
+            background-color:#fafafa;
+            color:#207cca;
+		}
+		#map {
+			background-color: black;
+			border-style: groove;
+			border-width: medium;
+			border-color: green;
+		}
+		#choice :hover { background: #33CCCC; color: white; }
+		#choice { list-style-type: none; margin-left: 50px; padding: 0; width: 60%; }
+		#choice li { margin: 0px; padding: 0.4em; font-size: 1.0em; height: 18px; cursor: pointer;background-color: rgb(250, 255, 189); }
+		#info {
+			margin-left: 50px;
+			padding: 0;
+			border:none;
+		}
+
+		.hidden {display: none;}
+
+		#history-container {
+			/*z-index: 1010;*/
+			background-color: transparent;
+		}
+
+		#feedback { font-size: 1.4em; }
+		#history .ui-selecting { background: #FECA40; }
+		#history .ui-selected { background: #FF9933; color: white; }
+		#history { list-style-type: none; margin-left: auto; margin-right: auto; padding: 0; width: auto; }
+		#history li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; cursor: pointer; border-style: solid; border-width: 1px; border-radius: 5px; margin-left: auto; margin-right: auto; text-align: center;}
+		div.model{
+			background-color: rgba(148, 137, 123, 0.5);
+			padding: 10px;
+			border-radius: 5px;
+		}
+
+		#historyIcon {
+			height: 48px;
+			width: 48px;
+			background-image: url('{% static "img/time_machine_alt.png" %}');
+			background-repeat: no-repeat;
+		}
+
+		#content h4{
+			padding:3px;
+			margin: 5px;
+		}
+
+		.popup_back {
+			z-index: 1000;
+		}
+		.popup_cont {
+			z-index: 1101;
+		}
+
+		</style>
+		<script type="text/javascript">
+		var csrf="{% csrf_token %}";
+		var iconLink='{% static "img/time_machine_alt.png" %}';
+		</script>
+	</head>
+	<body>
+		<div id="map"></div>
+		<a href="#" id="report" class="popup"></a>
+		<script type="text/javascript" src='{% static "js/jquery-2.1.1.js" %}'></script>
+		<script type="text/javascript" src='{% static "js/leaflet/leaflet.js" %}'></script>
+		<script type="text/javascript" src='{% static "js/jquery-ui/jquery-ui.min.js" %}'></script>
+		<script type="text/javascript" src='{% static "Popup/assets/js/jquery.popup.min.js"%}'></script>
+		<script type="text/javascript" src='{% static "js/map.js" %}'></script>
+		<script type="text/javascript" src='{% static "js/address.js" %}'></script>
+	</body>
+</html>
