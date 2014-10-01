@@ -149,10 +149,13 @@ $(document).ready(function(){
 						});
 						$(ui['selected']).data('layer',layer);
 						historicEventLayer.addLayer(layer);
+						layer.bringToBack();
 					}
 				});
 			}else{
-				historicEventLayer.addLayer($(ui['selected']).data('layer'));
+				var existinglayer = $(ui['selected']).data('layer')
+				historicEventLayer.addLayer(existinglayer);
+				existinglayer.bringToBack();
 			}
 		},
 		unselected:function(event,ui){
@@ -179,5 +182,32 @@ $(document).ready(function(){
 			slider.slider("value",this.selectedIndex);
 			modeled_extent(this.selectedIndex);
 		});
-	})();
+	})(); //ARI choice tool.
+	(function(){
+		var introguide = introJs();
+		introguide.setOptions({
+			steps:[
+				{
+					element: '.model',
+					intro: 'This slide bar is used to control the ARI (average recurrence interval) of <br>the extent of a flood being showed on the map.',
+					position: 'top'
+				},
+				{
+					element: '.leaflet-control-layers-toggle',
+					intro: 'There are three layers being turned on as default: Flood extent, Flood way <br>and cadastre. These can be turned of with this tool.',
+					position: 'left'
+				},
+				{
+					element: '.address',
+					intro: 'You can check out spcefic flood risk of your property by inputting the address here.',
+					position: 'buttom'
+				},
+				{
+					element: '.address',
+					intro: 'This app is for academic research purpose only, the accuracy of the information offering is not guaranteed. Thanks for the help and data from Thinkspatial and Victoria Flood Database. ',
+				},
+			]
+		});
+		introguide.start();
+	})(); //Intoduction steps tool.
 });
