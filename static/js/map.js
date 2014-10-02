@@ -12,6 +12,7 @@ var map;
 var jsonLayer=L.geoJson();     //Single parcel
 var recurrence_interval = [5,10,20,30,50,100,200,500,1000];
 var extent_cache = [];
+// var popup = new $.Popup();
 var default_extent=20;
 
 map=L.map('map',{

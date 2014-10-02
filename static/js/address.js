@@ -20,34 +20,25 @@ function modeled_extent(index){
 	layer_control.addOverlay(modeled_extent_layer,'Modeled Flood extent');
 }
 
+
 function draw_parcel(response){
 	jsonLayer=L.geoJson(response["result"],{
 		style:function(feature){
 			return {color:"#FFFF33"};
 		},
 		onEachFeature:function(feature,layer){
-			// var popupDiv = $('<div></div>');
-			// popupDiv.attr('id','popupdiv');
-			// popupDiv.append("<b>"+feature.properties.address+"</b>");
-			var popupDiv = "<div class='popupdiv'><b>"+feature.properties.address+"</b><br/><button type='button' id='history_button'>Flood History</button><button type='button' id='report_button'>Full Report</button></div>";
+			var popupDiv = "<div class='popupdiv'><b>"+feature.properties.address+"</b><br/><button type='button' id='history_button'>Flood History</button><button type='button' id='report_button' class='popup' href='/app/report/"+feature["properties"]["id"]+"/html/'>Full Report</button></div>";
 			var addressPopup=L.popup({closeButton:true}).setContent(popupDiv);
 			layer.bindPopup(addressPopup);
 			$('#map').on('click','#history_button',function(){
-				histories_request(feature["properties"]["id"]);
+				if($('#history').data('pid')!=feature["properties"]["id"]){
+					histories_request(feature["properties"]["id"]);
+				}
+				$('#content').toggle(true);
 			}).on('click','#report_button',function(){
-				var popup = new $.Popup();
+				var popup =new $.Popup();
 				popup.open('/app/report/'+feature["properties"]["id"]+'/html/');
-				// $('#report').popup();
-				// var popup = $('a.popup').data('popup');
-				// popup.open('/app/report/1/html/');
 			});
-			// layer.on("mouseover",function(e){
-			// 	layer.openPopup(layer.getBounds().getCenter());
-			// }).on("mouseout",function(e){
-			// 	addressPopup._close();
-			// }).on('click',function(e){
-			// 	histories_request(feature["properties"]["id"]);
-			// });
 		}
 	}).addTo(map);
 	map.fitBounds(jsonLayer.getBounds(),{maxZoom:18});
@@ -85,7 +76,7 @@ function histories_request(property_id){
 				newItem.addClass('ui-widget-content');
 				histories.append(newItem);
 			}
-			$('#content').toggle(true);
+			$('#history').data('pid',property_id);
 		}
 	});
 }

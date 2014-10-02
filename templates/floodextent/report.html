@@ -100,73 +100,78 @@
 			border-width:0px 0px 1px 1px;
 		}
 	</style>
-	<link rel="stylesheet" type="text/css" href='{% static "js/leaflet/leaflet.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "js/jquery-ui/jquery-ui.min.css" %}'>
 </head>
 <body>
 <div id="property_sketch">
 	<h1>{{address}}</h1>
 	<div id="map"></div>
 </div>
-<div id="history_table">
+
+<div id='accordion'>
 	<h3>Historic Events</h3>
-	{%if history_list %}
-	<table class="CSSTableGenerator">
-	<tr><td></td><td>Date</td></tr>
-	{% for event in history_list %}
-	<tr>
-		<td>{{forloop.counter}}</td>
-		<td>{{event}}</td>
-	</tr>
-	{% endfor %}
-	</table>
-	{% else %}
-	<p>This property has never been inundated before!</p>
-	{% endif %}
-</div>
-<div id="FloorWse_table">
-	<h3>Floor Level & Water Surface Elevation</h3>
-	{% if wse_list %}
-	<table class="CSSTableGenerator">
-	<tr><td>ARI</td><td>Floor Level</td><td>Water Surface</td></tr>
-	{% for wse in wse_list %}
-		{% if wse.1 < floor_level %}
-		<tr style="background-color: #99FF66">
-		{% else %}
-		<tr style="background-color: #FF3300">
-		{% endif %}
-		<td>{{wse.0}}</td><td>{{floor_level|floatformat:2}}</td><td>
-			{% if wse.1 > 0 %}
-			{{wse.1|floatformat:2}}
-			{%else%}
-			NaN
-			{% endif %}
-		</td></tr>
-	{% endfor %}
-	</table>
-	{% else %}
-	<p>No Data Available!</p>
-	{% endif %}
-</div>
-<div id="Depth_table">
-	<h3>Depth Statistics</h3>
-	{%if depth_list %}
-	<table class="CSSTableGenerator">
-		<tr><td>ARI</td><td>Max</td><td>Min</td><td>Avg</td></tr>
-		{%for row in depth_list%}
+	<div id="history_table">
+		{%if history_list %}
+		<table class="CSSTableGenerator">
+		<tr><td></td><td>Date</td></tr>
+		{% for event in history_list %}
 		<tr>
-			{%for item in row%}
-			<td>{{item}}</td>
-			{%endfor%}
+			<td>{{forloop.counter}}</td>
+			<td>{{event}}</td>
 		</tr>
-		{%endfor%}	
-	</table>
-	{% else %}
-	<p>No Data Available!</p>
-	{% endif %}
+		{% endfor %}
+		</table>
+		{% else %}
+		<p>This property has never been inundated before!</p>
+		{% endif %}
+	</div>
+
+	<h3>Floor Level & Water Surface Elevation</h3>
+	<div id="FloorWse_table">
+		{% if wse_list %}
+		<table class="CSSTableGenerator">
+		<tr><td>ARI</td><td>Floor Level</td><td>Water Surface</td></tr>
+		{% for wse in wse_list %}
+			{% if wse.1 < floor_level %}
+			<tr style="background-color: #99FF66">
+			{% else %}
+			<tr style="background-color: #FF3300">
+			{% endif %}
+			<td>{{wse.0}}</td><td>{{floor_level|floatformat:2}}</td><td>
+				{% if wse.1 > 0 %}
+				{{wse.1|floatformat:2}}
+				{%else%}
+				NaN
+				{% endif %}
+			</td></tr>
+		{% endfor %}
+		</table>
+		{% else %}
+		<p>No Data Available!</p>
+		{% endif %}
+	</div>
+
+	<h3>Depth Statistics</h3>
+	<div id="Depth_table">
+		{%if depth_list %}
+		<table class="CSSTableGenerator">
+			<tr><td>ARI</td><td>Max</td><td>Min</td><td>Avg</td></tr>
+			{%for row in depth_list%}
+			<tr>
+				{%for item in row%}
+				<td>{{item}}</td>
+				{%endfor%}
+			</tr>
+			{%endfor%}	
+		</table>
+		{% else %}
+		<p>No Data Available!</p>
+		{% endif %}
+	</div>
 </div>
-<script type="text/javascript" src='{% static "js/leaflet/leaflet.js" %}'></script>
-<script type="text/javascript" src='{% static "js/jquery-ui/jquery-ui.min.js" %}'></script>
-<script type="text/javascript" src='{% static "js/report.js" %}'></script>
+<script type="text/javascript">
+	$(function(){
+		$('#accordion').accordion();
+	});
+</script>
 </body>
 </html>
